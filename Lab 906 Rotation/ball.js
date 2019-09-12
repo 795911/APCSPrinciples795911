@@ -4,11 +4,15 @@ class Ball{
   constructor (x, y, dx, dy, id){
     this.loc = createVector (x, y);
     this.vel = createVector (dx, dy);
-    this.acc = createVector (0, 1);
+    this.acc = createVector (0, 0);
     this.clr = color(random(255), random(255), random(255))
-    this.id = id
-    this.w = 15;
+    this.id = id;
+    if(this.id < 0){
+    this.w = 50;
   }
+   else{
+     this.w = 15;
+   }
 
   run(){
     this.checkEdges();
@@ -17,33 +21,27 @@ class Ball{
   }
 
   checkEdges(){
-    if(this.loc.x < 0){
+    if(this.loc.x < 0 || this.loc.x > width){
       this.vel.x = -this.vel.x;
 
   }
-    if(this.loc.x > width){
-      this.vel.x = -this.vel.x;
-  }
-     if(this.loc.y < 0){
+    if(this.loc.y < 0 || this.loc.y > height){
        this.vel.y = -this.vel.y;
-  }
-    if(this.loc.y > height){
-      this.vel.y = -this.vel.y;
-      this.loc.y = height-2;
   }
 }
 
   update(){
-   var disToMainBall;
+   var disToatractor;
+   var disTorepeller;
    if(this.id >= 0){
-     disToMainBall = this.loc.dist(mainBall.loc);
-     if(disToMainBall < 250){
-    this.acc = p5.Vector.sub(mainBall.loc, this.loc);
+     disToatractor = this.loc.dist(atractor.loc);
+     if(disToatractor < 250){
+    this.acc = p5.Vector.sub(atractor.loc, this.loc);
     this.acc.normalize();
     this.acc.mult(0.5);
   }
-  if(disToMainBall < 150){
-    this.acc = p5.Vector.sub(this.loc, mainBall.loc);
+  if(disTorepeller < 150){
+    this.acc = p5.Vector.sub(this.loc, repeller.loc);
     this.acc.normalize();
     this.acc.mult(0.5);
    }
