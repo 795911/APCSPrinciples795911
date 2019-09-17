@@ -7,7 +7,16 @@ class Ball{
     this.acc = createVector (0, 0);
     this.clr = color(random(255), random(255), random(255))
     this.id = id;
+<<<<<<< HEAD
     }
+=======
+    if(this.id < 0){
+    this.w = 50;
+  }
+   else{
+     this.w = 15;
+   }
+>>>>>>> b2bbf80ef2078f8107a687c0f6fce37c34f7db39
 
   run(){
     this.checkEdges();
@@ -16,6 +25,7 @@ class Ball{
   }
 
   checkEdges(){
+<<<<<<< HEAD
     if(this.loc.x < 0){
      this.vel.x = -this.vel.x;
    }
@@ -36,6 +46,37 @@ class Ball{
      this.vel.add(this.acc);
      this.loc.add(this.vel);
   }
+=======
+    if(this.loc.x < 0 || this.loc.x > width){
+      this.vel.x = -this.vel.x;
+
+  }
+    if(this.loc.y < 0 || this.loc.y > height){
+       this.vel.y = -this.vel.y;
+  }
+}
+
+  update(){
+   var disToatractor;
+   var disTorepeller;
+   if(this.id >= 0){
+     disToatractor = this.loc.dist(atractor.loc);
+     if(disToatractor < 250){
+    this.acc = p5.Vector.sub(atractor.loc, this.loc);
+    this.acc.normalize();
+    this.acc.mult(0.5);
+  }
+  if(disTorepeller < 150){
+    this.acc = p5.Vector.sub(this.loc, repeller.loc);
+    this.acc.normalize();
+    this.acc.mult(0.5);
+   }
+ }
+ this.vel.limit(5)
+ this.vel.add(this.acc);
+ this.loc.add(this.vel);
+}
+>>>>>>> b2bbf80ef2078f8107a687c0f6fce37c34f7db39
 
    render(){
      fill(this.clr);

@@ -1,5 +1,9 @@
 class Ship{
+<<<<<<< HEAD
   constructor(x, y, dx, dy, id){
+=======
+  constructor(x, y, ds, dy, id){
+>>>>>>> b2bbf80ef2078f8107a687c0f6fce37c34f7db39
     this.loc = createVector (x, y);
     this.vel = createVector (dx, dy);
     this.acc = createVector (0, 1);
@@ -31,6 +35,7 @@ class Ship{
 }
 
   update(){
+<<<<<<< HEAD
     var distToMainBall;
     var distToMainBall2;
     var distToMidBall
@@ -66,3 +71,21 @@ class Ship{
    pop();
  }
 }//  +++++++++++++++++++++++++++++++++++  End Ball Class
+=======
+    this.vel.add(this.acc);
+    this.vel.limit(2);
+    this.loc.add(this.vel);
+   }
+
+    render(){
+      fill(this.clr);
+      this.angle = this.angle + 0.1;
+      push();
+        translate(this.loc.x, this.loc.y);
+        rotate(this.angle);
+        triangle(-5, 8, 5, 8, 0, -8)
+      pop();
+    }
+        
+}
+>>>>>>> b2bbf80ef2078f8107a687c0f6fce37c34f7db39
