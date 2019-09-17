@@ -4,11 +4,10 @@ class Ball{
   constructor (x, y, dx, dy, id){
     this.loc = createVector (x, y);
     this.vel = createVector (dx, dy);
-    this.acc = createVector (0, 1);
+    this.acc = createVector (0, 0);
     this.clr = color(random(255), random(255), random(255))
-    this.id = id
-    this.w = 15;
-  }
+    this.id = id;
+    }
 
   run(){
     this.checkEdges();
@@ -18,45 +17,33 @@ class Ball{
 
   checkEdges(){
     if(this.loc.x < 0){
-      this.vel.x = -this.vel.x;
-
-  }
-    if(this.loc.x > width){
-      this.vel.x = -this.vel.x;
-  }
-     if(this.loc.y < 0){
-       this.vel.y = -this.vel.y;
-  }
-    if(this.loc.y > height){
-      this.vel.y = -this.vel.y;
-      this.loc.y = height-2;
-  }
+     this.vel.x = -this.vel.x;
+   }
+   if(this.loc.x > width){
+     this.vel.x = -this.vel.x;
+   }
+   if(this.loc.y < 0){
+     this.vel.y = -this.vel.y;
+   }
+   if(this.loc.y > height){
+     this.vel.y = -this.vel.y;
+     this.loc.y = height -2;
+   }
 }
 
   update(){
-   var disToMainBall;
-   if(this.id >= 0){
-     disToMainBall = this.loc.dist(mainBall.loc);
-     if(disToMainBall < 250){
-    this.acc = p5.Vector.sub(mainBall.loc, this.loc);
-    this.acc.normalize();
-    this.acc.mult(0.5);
+     this.vel.limit(8);
+     this.vel.add(this.acc);
+     this.loc.add(this.vel);
   }
-  if(disToMainBall < 150){
-    this.acc = p5.Vector.sub(this.loc, mainBall.loc);
-    this.acc.normalize();
-    this.acc.mult(0.5);
-   }
- }
- this.vel.limit(5)
- this.vel.add(this.acc);
- this.loc.add(this.vel);
-}
 
    render(){
      fill(this.clr);
-     ellipse(this.loc.x, this.loc.y, this.w, this.w);
-  }
-
+     if (this.id <3 ){
+       ellipse (this.loc.x, this.loc.y, 50, 50);
+     }else {
+     ellipse(this.loc.x, this.loc.y, 15, 15);
+   }
+   }
 
 } //+++++++++++++++++++++++++++++++++++++++++++end ball class
