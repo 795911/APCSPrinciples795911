@@ -1,55 +1,99 @@
 // Mona
 //8-22-19
+
 class Ball{
+  constructor(x,y,dx,dy,w,id){
+    this.loc= createVector(x,y);
+    this.vel = createVector(dx,dy);
+    this.clr = color(random(255),random(255),random(255));
+    this.acc=createVector(0,0.5);
+    this.w=20;
+    this.id=id;
 
-  constructor(x, y, dx, dy, id){
-    this.loc = createVector(x, y);
-    this.vel = createVector (dx, dy);
-    this.acc = createVector (0, 0.5);
-    this.id = id
-    this.clr = color(random(255), random(255), random(255));
+  }
+  run(){
+    //main function within class
+    this.checkEdges();
+    this.render();
+    this.isColliding();
+    this.update();
+  }
+  checkEdges(){
+    //if hits left side, bounce
+    if(this.loc.x<0){
+      this.vel.x = -this.vel.x;
+    }
+    if(this.loc.x>width){
+      //if hits right side, bounce
+      this.vel.x = -this.vel.x;
+    }
+    if(this.loc.y<0){
+      //if hits top, bounce
+      this.vel.y = -this.vel.y;
+      this.vel.y=this.vel.y+2
+    }
+    if(this.loc.y>height){
+      //if hits bottom, bounce
+      this.vel.y = -this.vel.y;
+    }
   }
 
-run(){
-  this.checkEdges();
-  this.updates();
-  this.render();
-  this.score();
-}
-
-checkEdges(){
-  if(this.loc.x< 0) {this.vel. x = -this.vel.x}
-  if (this.loc.x> width) this.vel.x = -this.vel.x;
-  if (this.loc.y < 0) this.vel.y = - this.vel.y;
-  if(this.loc.y> height) this.vel.y = -this.vel.y;
-}
-
-updates(){
-  this.vel.add(this.acc);
-  this.loc.add(this.vel);
-}
-
-render(){
-  fill( 250, 10, 40);
-  ellipse(this.loc.x, this.loc.y, 50, 50);
-}
-
-isColliding(){
-  if (this.loc.x> paddle.loc.x &&
- this.loc.x < paddle.loc.x +paddle.w &&
- this.loc.y > paddle.loc.y && this.loc.y < paddle.loc.y +paddle.h&&
- this.vel.y>0){
-   return true;
- } else{
-   return false;
- }
-}
-score(){
-  if (this.isColliding()===true && this.id %2 === 1){
-    score ++;
-  }else if (this.isColliding() === true && this.id %2 ===0){
-    score--;
+  update(){
+    for(var i=balls.length-1;i>=0;i--){
+      //checks if ball hits paddle
+      if(balls[i].isColliding()){
+        //if ball hits top of paddle
+        if(this.vel.y>0){
+          //remove ball from array
+          balls.splice(i,1);
+          //add score
+          score=score+1;
+        }
+        //if ball hits bottom of paddle
+        if(this.vel.y<0){
+          //remove ball form array
+          balls.splice(i,1);
+          //subtract health
+          health=health-1;
+        }
+      }
+    }
+    //movement
+    this.loc.add(this.vel);
+    this.vel.limit(25)
+    this.vel.add(this.acc);
+    //if no more balls, but has not had 3 iterations, and still alive
+    if(balls.length<=0&& iteration<=3&& health>0){
+      if(gameMode==='easy'){
+        loadObjects(8);
+      }
+      if(gameMode==='medium'){
+        loadObjects(16);
+      }
+      if(gameMode==='hard'){
+        loadObjects(30);
+      }
+      runBalls();
+      iteration=iteration+1;
+    }
   }
-}
+  render(){
+    //creates balls
+      fill(this.clr);
+      ellipse(this.loc.x, this.loc.y, this.w, this.w,this.id);
+    }
+//if ball hits the paddle
+  isColliding(){
+    if(this.loc.x>paddle.loc.x&&
+        this.loc.x<paddle.loc.x+paddle.w&&
+        this.loc.y+(this.w/2)>paddle.loc.y&&
+        this.loc.y+(this.w/2)<paddle.loc.y+paddle.h){
+          return (true);
+        }else{
+          return (false);
+        }
+        }
 
-}//  +++++++++++++++++++++++++++++++++++  End Ball Class
+
+  }
+//end ball class
