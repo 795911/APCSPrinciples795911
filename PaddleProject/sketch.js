@@ -98,16 +98,27 @@ function instructionsText(){ //code for instructions page
 
 
 function playGame(){
-  fill (255);
-  textSize (40);
-  text ("SCORE:" + score, 100 , 50); // display score
-  runObjects();
-  if (checkRed() === true|| balls.length ===0){ // if all the red balls are gone, win
-    gameState= 4;
-    win = 'yes';
-  } else if( score < 0 ){ // if negative score, lose
-    gameState = 4;
-    win = 'no';
+  //the actual game screen
+  background(20,20,20);
+  textSize(25);
+  fill(255,0,0);
+  //sets up score and health at top right and left
+  text('Score:'+score,20,20);
+  text('Health:'+health,650,20);
+  runBalls();
+  //checks if user loses
+  if(health<=0){
+    clear();
+    gameState=3;
+    win='no';
+    loadButtons();
+  }
+  //checks if user survives and wins
+  if(iteration===4){
+    clear();
+    gameState=3;
+    win='yes';
+    loadButtons();
   }
 }
 
