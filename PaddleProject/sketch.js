@@ -1,185 +1,207 @@
-//  Your Name
-// 	Date or version number
-var balls = []; //declares array
+//  Mona Mostafa
+// 	9-25-19
+var balls= []
 var paddle;
-var difficulty;
-var score =0;
-var gameState = 1;
+var score=0;
+var gameState=1;
+var gameMode;
+var health=10;
 var win;
-var btnEasy, btnMed, btnHard, btnInstructions, btnBTMI, btnBTME, btnReplay;
+var iteration=1;
+var buttons=[];
+var btnEasy, btnMedium, btnHard; 
+
 function setup() {
+  // put setup code here
   var cnv = createCanvas(800, 800);
   cnv.position((windowWidth-width)/2, 30);
-  background(255);
-  newButton();
+  background(0);
+  loadButtons();
 }
+
+  // function render(){
+  //   fill(this.clr);
+  //   rect(this.loc.x,this.loc.y,this.w,this.h);
+  //   fill(0);
+  //   text('Easy',55, 525, 200, 200);
+  //   fill(0);
+  //   text('Medium',305, 530, 200, 200);
+  //   fill(0);
+  //   text('Hard',560, 525, 200, 200);
+  // }
+  function checkEdges(){
+    isTouching();
+  }
 
 function draw() {
-  background(255);
-  if (gameState ===1){
-    startGame(); //start screen
-  }else if (gameState === 2){
-    playGame(); //game screen
-  }else if (gameState === 3){
-    instructionsText();
-  }else if (gameState === 4){ //game over screen
+  background(0);
+  if(gameState===1){
+    startGame();
+  }else if(gameState===2){
+    playGame();
+  }else if(gameState===3){
     endGame();
-}
-}
-
-function newButton(){
-  btnEasy = new Button(50, 450, 200, 200, color(100,10,200) );
-  btnMed = new Button(300, 450, 200, 200, color (250,5,79));
-  btnHard = new Button(550, 450, 200, 200, color(30, 0, 200));
-  btnInstructions = new Button (200, 700, 400, 74, color(255));
-  btnBTMI = new Button (150, 150, 500, 100, color(230, 4, 60));
-  btnReplay = new Button (66, 100, 300, 100, color (255));
-  btnBTME = new Button (432, 100, 300, 100, color(255));
-}
-
-function startGame(){ // choose easy med hard
-  textSize(80);
-  fill(0);
-  textAlign(RIGHT);
-  text ("PADDLE GAME", 700, 250); //title
-  textAlign(CENTER);
-
-
-  btnEasy.render(); //draws buttons
-  btnMed.render();
-  btnHard.render();
-  btnInstructions.render();
-
-  textSize (60); //text for buttons
-  fill(0);
-  text ("EASY", 55, 525, 200, 200);
-  text ("HARD", 560, 525, 200, 200);
-  textSize(45);
-  text ("MEDIUM", 305, 530, 200, 200);
-  fill (0);
-  text ("INSTRUCTIONS", 205, 712, 400, 75);
-
-  if (btnInstructions.isClicked()=== true){ //go to instructions page
-    gameState = 3;
   }
+}
 
-  checkDifficulty(); // checks which difficulty is chosen
-  if (difficulty === 'easy' || difficulty === 'medium'|| difficulty === 'hard'){
-  if (difficulty === 'easy'){
-  loadObjects(5);
-  }else if (difficulty === 'medium'){
-    loadObjects (15);
-  }else if (difficulty === 'hard'){
-    loadObjects (20);
-    }
-  gameState = 2; // play game
-  }
-}// end start game
-
-function instructionsText(){ //code for instructions page
-
-  textSize(30);
+function startGame(){
+  //title
+  textSize(75);
   fill(255);
-  text("Move the mouse side to side to move the paddle.", 400, 350);
-  text("Hit the green balls with the paddle to increase score", 400, 400);
-  text("If you hit a red ball, your score will decrease", 400, 450);
-  text("Once you have removed all the green balls, you win!", 400, 500);
-  text("If your score goes below 0, you lose ", 400, 550);
-
-  btnBTMI.render();
-  fill(0);
+  text('Paddle Game!',105,200);
   textSize(50);
-  text("Back to Main Menu", 400, 215);
-
-  if(btnBTMI.isClicked()=== true){ // back to main menu
-      gameState = 1;
+  runButtons();
+  textSize(25);
+  fill(244);
+  text('Move the paddle with your mouse to hit the balls.',50,350);
+  text('But make sure the balls only hit the top of the paddle!',50,375);
+  text('If the balls hit the top of the paddle, the score will increase.',50,400);
+  text('If the balls hit the bottom of the paddle,your health will decrease.', 50,450);
+  text('If youe health does down to 0, you lose! If you survive, you win!',50,475);
+  //checks if user touches the box
+  //moves to next screen
+  if(gameMode==='easy'||gameMode==='medium'||gameMode==='hard'){
+    clear();
+    if(gameMode==='easy'){
+      loadObjects(5);
     }
+    if(gameMode==='medium'){
+      loadObjects(15);
+    }
+    if(gameMode==='hard'){
+      loadObjects(35);
+    }
+    gameState=2;
+  }
 }
 
+function isTouching(){
+  //if touching easy
+  if(mouseIsPressed&&
+      mouseX>200&&
+      mouseX<250&&
+      mouseY>600&&
+      mouseY<650){
+        gameMode='easy'
+      }
+      //if touching medium
+  if(mouseIsPressed&&
+      mouseX>400&&
+      mouseX<450&&
+      mouseY>600&&
+      mouseY<650){
+        gameMode='medium'
+      }
+      //if touching hard
+  if(mouseIsPressed&&
+      mouseX>600&&
+      mouseX<650&&
+      mouseY>600&&
+      mouseY<650){
+        gameMode='hard'
+      }
 
+}
 function playGame(){
-  //the actual game screen
   background(20,20,20);
   textSize(25);
   fill(255,0,0);
-  //sets up score and health at top right and left
   text('Score:'+score,20,20);
   text('Health:'+health,650,20);
   runBalls();
-  //checks if user loses
   if(health<=0){
     clear();
     gameState=3;
     win='no';
-    loadButtons();
   }
-  //checks if user survives and wins
   if(iteration===4){
     clear();
     gameState=3;
     win='yes';
-    loadButtons();
   }
 }
 
-
-function endGame(){ //end game screen
-  if (win === 'yes'){
-    textSize(80);
-    fill (255);
-    text ("YOU WIN", 400, 450);
-    text ("SCORE:" + score, 400, 550);
-  }else if (win === 'no'){
+function endGame(){
+  background(20,20,20);
+  if(win==='no'){
     textSize(100);
-    fill (255);
-    text ("YOU LOSE", 400, 500);
+    fill(255);
+    text("You Lost!",200,400);
   }
-
-  btnReplay.render();
-  btnBTME.render();
-
-  fill(0);
-  textSize(40);
-  text ("REPLAY", 220, 145);
-  text ("LEVEL", 220, 185)
-  text ("BACK TO", 580, 145);
-  text("MAIN MENU", 580, 185);
-  if (btnBTME.isClicked()){ // go back to main menu
-    gameState = 1;
-    difficulty = 'startOver';
-    clearEverything();
+  if(win==='yes'){
+    textSize(100);
+    fill(255);
+    text("You win!",400,400);
   }
-  if (btnReplay.isClicked()=== true){ // replay level
-    clearEverything();
+  fill(255);
+  rect(300,600,50,50);
+  textSize(30);
+  text('Play Again?',275,575);
+  fill(255);
+  rect(500,600,50,50);
+  text('I Quit',500,575);
+  if(mouseIsPressed&&
+      mouseX>300&&
+      mouseX<350&&
+      mouseY>600&&
+      mouseY<650){
+        clear();
+        score=0;
+        gameMode='';
+        iteration=1;
+        balls=[];
+        win='no';
+        health=10;
+        gameState=1;
+      }
+      //if touching quit
+  if(mouseIsPressed&&
+      mouseX>500&&
+      mouseX<550&&
+      mouseY>600&&
+      mouseY<650){
+        remove();
+        clear();
+      }
+}
+
+function loadButtons(){
+  if (gameState===1){
+      btnEasy= new Button(200 ,550, 100, 100, color(255, 40, 0), "Easy");
+      btnMedium= new Button(400 ,550, 150, 100, color(255, 40, 0), "Medium");
+      btnHard= new Button(600 ,550, 100, 100, color(255, 40, 0), "Hard");
+
+  }
+  if(gameState===3){
+    buttons=[]
+    for(var i=0; i<2;i++){
+      buttons[i]= new Button(400+(200*i),600, 100, 50);
     }
   }
-
-function checkDifficulty(){ //check which difficulty button is isClicked
-  if (btnEasy.isClicked()=== true){
-     difficulty = 'easy';
-   }
- if (btnMed.isClicked()===true){
-    difficulty = 'medium';
-  } if (btnHard.isClicked()=== true){
-    difficulty = 'hard';
-  }
 }
 
-function loadObjects(x){ // load paddle and balls
-  paddle = new Paddle (400, 500, 150, 40);
-  for(var i = 0; i < x; i++){
-    balls[i]=new Ball(random(width), random(0, 200) , 4,4, i);
-  }
+function runButtons(){
+  btnEasy.run()
+  btnMedium.run()
+  btnHard.run()
+}
+function loadObjects(n){
+    paddle= new Paddle(350,500,150,50);
+    for(var i=0; i<n; i++){
+      balls[i]= new Ball(random(0,400), random(0,400),random(-8,8),random(0,8),i);
+    }
 }
 
-function runObjects(){ //runs paddle and balls
+function runBalls(){
   paddle.run();
-  for(var i = 0; i < balls.length; i++){
+  for(var i=0; i<balls.length; i++){
     balls[i].run();
-    }
   }
-
-function clearEverything() { //clear gamestate and score for restarting level
-  gameState = 1;
-  score = 0 ;
 }
+ function mouseClicked(){
+   console.log("mouseClicked");
+   if (mouseIsPressed&& mouseX > btnEasy.loc.x && mouseX< btnEasy.loc.x+btnEasy.w&&
+       mouseY>btnEasy.loc.y && mouseY<btnEasy.loc.y+this.h){
+          gamestate = 1
+   }
+ }
