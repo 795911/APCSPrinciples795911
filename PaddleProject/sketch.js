@@ -9,7 +9,7 @@ var health=10;
 var win;
 var iteration=1;
 var buttons=[];
-var btnEasy, btnMedium, btnHard; 
+var btnEasy, btnMedium, btnHard;
 
 function setup() {
   // put setup code here
@@ -17,6 +17,7 @@ function setup() {
   cnv.position((windowWidth-width)/2, 30);
   background(0);
   loadButtons();
+  loadObjects(0);
 }
 
   // function render(){
@@ -60,19 +61,6 @@ function startGame(){
   text('If youe health does down to 0, you lose! If you survive, you win!',50,475);
   //checks if user touches the box
   //moves to next screen
-  if(gameMode==='easy'||gameMode==='medium'||gameMode==='hard'){
-    clear();
-    if(gameMode==='easy'){
-      loadObjects(5);
-    }
-    if(gameMode==='medium'){
-      loadObjects(15);
-    }
-    if(gameMode==='hard'){
-      loadObjects(35);
-    }
-    gameState=2;
-  }
 }
 
 function isTouching(){
@@ -109,7 +97,7 @@ function playGame(){
   text('Score:'+score,20,20);
   text('Health:'+health,650,20);
   runBalls();
-  if(health<=0){
+  if(health<=5){
     clear();
     gameState=3;
     win='no';
@@ -127,11 +115,13 @@ function endGame(){
     textSize(100);
     fill(255);
     text("You Lost!",200,400);
+    gameState = 3
   }
   if(win==='yes'){
     textSize(100);
     fill(255);
     text("You win!",400,400);
+    gameState = 3
   }
   fill(255);
   rect(300,600,50,50);
@@ -140,6 +130,7 @@ function endGame(){
   fill(255);
   rect(500,600,50,50);
   text('I Quit',500,575);
+  gameState = 3
   if(mouseIsPressed&&
       mouseX>300&&
       mouseX<350&&
@@ -200,8 +191,25 @@ function runBalls(){
 }
  function mouseClicked(){
    console.log("mouseClicked");
-   if (mouseIsPressed&& mouseX > btnEasy.loc.x && mouseX< btnEasy.loc.x+btnEasy.w&&
-       mouseY>btnEasy.loc.y && mouseY<btnEasy.loc.y+this.h){
-          gamestate = 1
-   }
- }
+   if (mouseX > btnEasy.loc.x && mouseX< btnEasy.loc.x+btnEasy.w&&
+       mouseY>btnEasy.loc.y && mouseY<btnEasy.loc.y+btnEasy.h){
+          gameState = 2
+          loadObjects(15);
+
+       }
+   if (mouseX > btnMedium.loc.x && mouseX< btnMedium.loc.x+btnMedium.w&&
+       mouseY>btnMedium.loc.y && mouseY<btnMedium.loc.y+btnMedium.h){
+          gameState = 2
+            loadObjects(35);
+      }
+ if (mouseX > btnHard.loc.x && mouseX< btnHard.loc.x+btnHard.w&&
+     mouseY>btnHard.loc.y && mouseY<btnHard.loc.y+btnHard.h){
+        gameState = 2
+          loadObjects(55);
+      }
+    }
+
+    function clearEverything() { //clear gamestate and score for restarting level
+      gameState = 1;
+      score = 0 ;
+    }
