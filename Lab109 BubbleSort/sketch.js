@@ -7,7 +7,9 @@ function setup() {
   fill(200, 30, 150);
   list = [4, 8, 6, 3, 9, 7]
   console.log(list);
-  sort(list, count)
+  list.sort();
+  console.log(list);
+
 
 
 
