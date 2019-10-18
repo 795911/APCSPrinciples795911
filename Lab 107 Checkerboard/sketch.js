@@ -31,7 +31,7 @@ function loadSquares(){
           var shade=color(70, 5, 18);
         }
         if(x%2===0){
-          var shade=color(255;
+          var shade=color(255);
         }
       }
       squares[x+(8*i)]= new Square(100*x,100*i,100,100, shade);
