@@ -1,4 +1,5 @@
-
+//Mona
+//barclass
 
 class Bar{
   constructor(x,y,w,h,c){
@@ -9,10 +10,12 @@ class Bar{
   }
 run(){
   this.render();
-  this.update();
-
 }
 render(){
   fill(this.clr);
   rect(this.loc.x,this.loc.y,this.w,this.h);
+}
+set(i){
+  this.loc.x=i*25;
+ }
 }
