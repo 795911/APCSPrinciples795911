@@ -12,13 +12,12 @@ render(){ // creates button
   rect (this.loc.x, this.loc.y, this.w, this.h);
   }
 
-isClicked(){ // to check if that button is pressed
+isClicked(){ // this will check if that button is pressed
   if (mouseIsPressed&& mouseX > this.loc.x && mouseX< this.loc.x+this.w&&
       mouseY>this.loc.y && mouseY<this.loc.y+this.h){
-          return true;
+        return true;
   }
 }
-
 
 
 
