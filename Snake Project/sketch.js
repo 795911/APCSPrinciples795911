@@ -1,131 +1,112 @@
 //  Mona Mostafa
 // 	10-31-19
-//  Snake Games
+//  Snake Game
+var score, header_height, snake, difficulty;
+var ga
+meState = 1;
+var h = 10;
+var btnEasy, btnMed, btnHard, btnInstructions, btnBTMI, btnBTME, btnReplay;
 function setup() {
   var cnv = createCanvas(800, 800);
   cnv.position((windowWidth-width)/2, 30);
-  background(5, 5, 5);
-  fill(200, 30, 150);
-
-
-}
-function checkEdges(){
-  isTouching();
+  background(217, 189, 124);
+  header_height = 800;
+  loadObjects(2);
+  newButton();
 }
 
-function draw() {
-background(0);
-if(gameState===1){
-  startGame();
-}else if(gameState===2){
-  playGame();
-}else if(gameState===3){
-  endGame();
- }
+function draw(){
+    if (gameState ===1){
+      startGame(); //start screen
+    }else if (gameState === 2){
+      playGame(); //game screen
+    }else if (gameState === 3){
+      instructionsText();
+    }else if (gameState === 4){ //game over screen
+      endGame();
+  }
+}
+
+function newButton(){
+  btnEasy = new Button(50, 450, 200, 200, color(78, 219, 18) );
+  btnMed = new Button(300, 450, 200, 200, color (250,250,7));
+  btnHard = new Button(550, 450, 200, 200, color(250, 0, 0));
 }
 
 function startGame(){
-  //title
-  textSize(75);
+  textSize(80);
   fill(255);
-  text('Snake Game!',105,200);
-  textSize(50);
-  textSize(25);
+  textAlign(RIGHT);
+  text ("SNAKE", 400, 200); //title
+  textAlign(CENTER);
+  text ("GAME", 400, 300);
 
-  function isTouching(){
-    //if touching easy
-    if(mouseIsPressed&&
-        mouseX>200&&
-        mouseX<250&&
-        mouseY>600&&
-        mouseY<650){
-          gameMode='easy'
-        }
-        //if touching medium
-    if(mouseIsPressed&&
-        mouseX>400&&
-        mouseX<450&&
-        mouseY>600&&
-        mouseY<650){
-          gameMode='medium'
-        }
-        //if touching hard
-    if(mouseIsPressed&&
-        mouseX>600&&
-        mouseX<650&&
-        mouseY>600&&
-        mouseY<650){
-          gameMode='hard'
-        }
+  btnEasy.render();
+  btnMed.render();
+  btnHard.render();
 
+  textSize (60); //text for buttons
+  fill(255);
+  text ("EASY", 55, 525, 200, 200);
+  text ("HARD", 560, 525, 200, 200);
+  textSize(45);
+  text ("MEDIUM", 305, 530, 200, 200);
+
+    checkDifficulty(); // checks which difficulty is chosen
+    if (difficulty === 'easy' || difficulty === 'medium'|| difficulty === 'hard'){
+      if (difficulty === 'easy'){
+        loadObjects(2);
+      }else if (difficulty === 'medium'){
+        loadObjects (5);
+      }else if (difficulty === 'hard'){
+        loadObjects (7);
+      }
+      gameState = 2; // play game
+    }
+}
+
+function playGame(){
+  frameRate(10);
+  background(217, 189, 124);
+  runObjects();
+}
+
+function loadObjects(n){
+    snake = new Snake (Math.floor(random(10, 26))*30,Math.floor(random (10, 26))*30,30, color(227, 69, 7));
+  for (var j = 0; j < n; j++){
+    food[j] = new Food (Math.floor(random(0, 26))*30, Math.random(random (0, 26))*30, color(70));
+    }
+}
+
+function runObjects(){
+    snake.run();
+
+  for(var i = 0; i< food.length; i++){
+    food[i].run();
   }
-  function playGame(){
-    background(20,20,20);
-    textSize(25);
-    fill(255,0,0);
-    text('Score:'+score,20,20);
-    text('Health:'+health,650,20);
-    runBalls();
-    if(health<=5){
-      clear();
-      gameState=3;
-      win='no';
-    }
-    if(iteration===4){
-      clear();
-      gameState=3;
-      win='yes';
-    }
+}
+
+function newGame(){ //create snake and food objects
+}
+function checkTangled(){
+  return snake.tangled();
+}
+function startNewRound(){
+
+}
+
+
+function getFood() {
+
+}
+
+function checkDifficulty(){ //check which difficulty button is isClicked
+  if (btnEasy.isClicked()=== true){
+     difficulty = 'easy';
+   }
+ if (btnMed.isClicked()===true){
+    difficulty = 'medium';
+  } if (btnHard.isClicked()=== true){
+    difficulty = 'hard';
   }
-
-  function endGame(){
-    background(20,20,20);
-    if(win==='no'){
-      textSize(100);
-      fill(255);
-      text("You Lost!",200,400);
-      gameState = 3
-    }
-    if(win==='yes'){
-      tex
-      tSize(100);
-      fill(255);
-      text("You win!",400,400);
-      gameState = 3
-    }
-    fill(255);
-    rect(300,600,50,50);
-    textSize(30);
-    text('Play Again?',275,575);
-    fill(255);
-    rect(500,600,50,50);
-    text('I Quit',500,575);
-    gameState = 3
-    if(mouseIsPressed&&
-        mouseX>300&&
-        mouseX<350&&
-        mouseY>600&&
-        mouseY<650){
-          clear();
-          score=0;
-          gameMode='';
-          iteration=1;
-          balls=[];
-          win='no';
-          health=10;
-          gameState=1;
-        }
-        //if touching quit
-    if(mouseIsPressed&&
-        mouseX>500&&
-        mouseX<550&&
-        mouseY>600&&
-        mouseY<650){
-          remove();
-          clear();
-        }
-  }
-
-function draw() {
-
 }

@@ -1,18 +1,27 @@
-//food class
 class food{
+  
   constructor (x, y, clr){
-  this.loc = createVector(x,y);
-  this.clr = clr;
+    this.food = createVector(x,y);
+    this.clr = clr;
+  }
+
+  run(){
+    this.render();
+    this.update();
+  }
+
+  render(){
+      fill(this.clr);
+      rect(this.food.x, this.food.y, 30, 30);
+  }
+
+  update(){
+    if(snake.head.x === this.food.x &&
+     snake.head.y === this.food.y){
+    this.food.x = Math.floor(random(0,79))*30;
+    this.food.y = Math.floor(random(0,79))*30;
+  }
+
 }
 
-run(){
-  this.render();
-}
-
-render(){
-    fill(this.clr);
-    rect(this.loc.x, this.loc.y, 50, 50);
-
-}
- }// end food class
-}
+  }// end food class
