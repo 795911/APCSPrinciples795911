@@ -1,9 +1,9 @@
 // snake class
 class Snake{
-  constructor(x, y,w, c){
+  constructor(x, y, w, c){
     this.head =createVector(x,y);
     this.vel = createVector(0,0);
-    this.w = 30;
+    this.w = w;
     this.clr = c;
     this.body = [];
 

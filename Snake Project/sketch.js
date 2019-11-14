@@ -6,13 +6,17 @@ var ga
 meState = 1;
 var h = 10;
 var btnEasy, btnMed, btnHard, btnInstructions, btnBTMI, btnBTME, btnReplay;
+var food;
 function setup() {
   var cnv = createCanvas(800, 800);
   cnv.position((windowWidth-width)/2, 30);
   background(217, 189, 124);
   header_height = 800;
+  var w = 40
+  var numCol = width/w
   loadObjects(2);
   newButton();
+
 }
 
 function draw(){
@@ -37,9 +41,9 @@ function startGame(){
   textSize(80);
   fill(255);
   textAlign(RIGHT);
-  text ("SNAKE", 400, 200); //title
+  text ("SNAKE GAME!!", 400, 200); //title
   textAlign(CENTER);
-  text ("GAME", 400, 300);
+
 
   btnEasy.render();
   btnMed.render();
@@ -67,15 +71,14 @@ function startGame(){
 
 function playGame(){
   frameRate(10);
-  background(217, 189, 124);
+  background(255);
   runObjects();
 }
 
 function loadObjects(n){
-    snake = new Snake (Math.floor(random(10, 26))*30,Math.floor(random (10, 26))*30,30, color(227, 69, 7));
-  for (var j = 0; j < n; j++){
-    food[j] = new Food (Math.floor(random(0, 26))*30, Math.random(random (0, 26))*30, color(70));
-    }
+    snake = new Snake (Math.floor(random(numCol)),Math.floor(random (10, 26))*30,30, color(227, 20, 100));
+    food = new Food (Math.floor(random(numCol)),Math.floor(random (10, 26))*30,30, color(100, 120, 100));
+
 }
 
 function runObjects(){
