@@ -1,5 +1,5 @@
 //button class
-class button{
+class Button{
   constructor(x, y, w, h , clr){
     this.loc = createVector(x,y);
     this.w= w;

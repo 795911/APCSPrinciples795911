@@ -1,20 +1,19 @@
 //  Mona Mostafa
 // 	10-31-19
 //  Snake Game
-var score, header_height, snake, difficulty;
-var ga
-meState = 1;
+var score, header_height, snake, difficulty, numCol;
+var gameState = 1;
 var h = 10;
 var btnEasy, btnMed, btnHard, btnInstructions, btnBTMI, btnBTME, btnReplay;
 var food;
 function setup() {
   var cnv = createCanvas(800, 800);
   cnv.position((windowWidth-width)/2, 30);
-  background(217, 189, 124);
+  background(0);
   header_height = 800;
   var w = 40
-  var numCol = width/w
-  loadObjects(2);
+  numCol = width/w
+  loadObjects();
   newButton();
 
 }
@@ -32,16 +31,16 @@ function draw(){
 }
 
 function newButton(){
-  btnEasy = new Button(50, 450, 200, 200, color(78, 219, 18) );
-  btnMed = new Button(300, 450, 200, 200, color (250,250,7));
-  btnHard = new Button(550, 450, 200, 200, color(250, 0, 0));
+  btnEasy = new Button(50, 450, 200, 200, color(255, 105, 183));
+  btnMed = new Button(300, 450, 200, 200, color (100, 21, 100));
+  btnHard = new Button(550, 450, 200, 200, color(40, 21, 200));
 }
 
 function startGame(){
   textSize(80);
   fill(255);
   textAlign(RIGHT);
-  text ("SNAKE GAME!!", 400, 200); //title
+  text ("SNAKE GAME!!", 680, 230); //title
   textAlign(CENTER);
 
 

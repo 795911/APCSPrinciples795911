@@ -1,5 +1,5 @@
-class food{
-  
+class Food{
+
   constructor (x, y, clr){
     this.food = createVector(x,y);
     this.clr = clr;
