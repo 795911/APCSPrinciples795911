@@ -8,7 +8,9 @@ class Snake{
     this.body = [];
 
   }// end constructor
-
+  loadSegment(){
+      this.body.push(createVector(this.head.x, this.head.y));
+    }
   run(){
     this.update();
     this.render();
