@@ -1,8 +1,7 @@
 class Food{
 
-  constructor (x, y, clr){
+  constructor (x, y){
     this.food = createVector(x,y);
-    this.clr = clr;
   }
 
   run(){
@@ -11,8 +10,9 @@ class Food{
   }
 
   render(){
-      fill(this.clr);
+      fill(0, 30, 200);
       rect(this.food.x, this.food.y, 30, 30);
+
   }
 
   update(){

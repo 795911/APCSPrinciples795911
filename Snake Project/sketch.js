@@ -70,37 +70,33 @@ function startGame(){
 
 function playGame(){
   frameRate(10);
-  background(255);
+  background(0);
   runObjects();
 }
 
 function loadObjects(n){
     snake = new Snake (Math.floor(random(numCol)),Math.floor(random (10, 26))*30,30, color(227, 20, 100));
-    food = new Food (Math.floor(random(numCol)),Math.floor(random (10, 26))*30,30, color(100, 120, 100));
+    food = new Food(int(random(80)),int(random(80)),10,0);
 
 }
 
 function runObjects(){
+  console.log("inside render");
     snake.run();
-
-  for(var i = 0; i< food.length; i++){
-    food[i].run();
-  }
+    food.run();
+}
+function clearEverything() { //clear gamestate and score for restarting level
+  gameState = 1;
+  score = 0 ;
+  timerValue = 10;
+  food = [];
 }
 
-function newGame(){ //create snake and food objects
-}
 function checkTangled(){
-  return snake.tangled();
-}
-function startNewRound(){
-
-}
-
-
-function getFood() {
-
-}
+if (snake.tangled() === true) {
+  gameState = 4;
+    }
+  }
 
 function checkDifficulty(){ //check which difficulty button is isClicked
   if (btnEasy.isClicked()=== true){
