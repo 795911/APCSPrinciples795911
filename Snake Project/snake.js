@@ -17,14 +17,10 @@ class Snake{
   } //end run
 
   update(){
-    this.keyPressed();
+
     this.checkEdges();
-    for(var i = 0; i< food.length; i++){
-    if(this.head.x === food[i].food.x &&
-       this.head.y === food[i].food.y){
-         this.loadSegment();
-     }
-   }
+
+
     // update the body
     if(this.body.length>0){
     for(var i = this.body.length-1; i < 0; i--){
@@ -42,10 +38,10 @@ class Snake{
   render(){
  // render head
     fill(this.clr);
-    rect(this.head.x, this.head.y, this.w, this.w);
+    rect(this.head.x*numCol, this.head.y*numCol, this.w, this.w);
  // render the body
     for(var i = 0; i < this.body.length; i++){
-      rect(this.body[i].x, this.body[i].y, w, w);
+      rect(this.body[i].x*numCol, this.body[i].y*numCol, this.w, this.w);
    }
  }
   loadBody(){
@@ -62,21 +58,7 @@ class Snake{
     }
   }
 
-   keyPressed(){
-    if(keyCode === UP_ARROW){
-        this.head.y = this.head.y - this.w;
-    }
-    if(keyCode === DOWN_ARROW){
-      this.head.y = this.head.y + this.w;
-      }
-    if(keyCode === LEFT_ARROW){
-    this.head.x = this.head.x - this.w;
-      }
-    if(keyCode === RIGHT_ARROW){
-    this.head.x = this.head.x + this.w;
 
-      }
-  }//end keyPressed
 
   checkEdges(){ //keep snake inside screen
       if(this.head.x< 0) {this.head.x + this.w}
