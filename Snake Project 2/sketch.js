@@ -14,12 +14,12 @@ function setup() {
   // put setup code here
   var cnv = createCanvas(800, 800);
   cnv.position((windowWidth-width)/2, 30);
-  background(0);
+  background(255, 192, 203);
   endGame='no';
   hitFood='no';
   loadHead();
   loadFood();
-  frameRate(14);
+  frameRate(10);
 }
 
 function draw() { //setting the different game states
@@ -33,34 +33,35 @@ function draw() { //setting the different game states
     finalScreen();
   }
 }
-function newButton(){
-  btnPlay = new Button(300, 450, 200, 200, color (100, 21, 100));
-}
 
 function startScreen(){ //the cover page
   textSize(80);
-  fill(255);
+  fill(106, 13, 170);
   textAlign(RIGHT);
-  text ("SNAKE GAME!!", 680, 230); //title
+  text ("SNAKE GAME!", 680, 230); //title
   textAlign(CENTER);
-
-  btnPlay.render();
-
-  textSize (60); //text for buttons
-  fill(255);
-  textSize(45);
-  text ("Play", 305, 530, 200, 200);
-
+  fill(106, 13, 170)
+  text('PLAY',373,500);
+  rect(270,510,200,200);
+  fill(106, 13, 170);
 
 
   if(mouseIsPressed&&
-      mouseX>375&&
+      mouseX>270&&
       mouseX<425&&
-      mouseY>575&&
+      mouseY>510&&
       mouseY<625){
         clear();
         gameState=2;
       }
+}
+
+function finalScreen(){
+  background(0);
+  textSize(100);
+  textAlign(RIGHT);
+  fill(106, 13, 170);
+  text('YOU LOST:(', 670, 430);
 }
 
 function playGame(){ //the play game screen
@@ -76,26 +77,19 @@ if (endGame==='yes'){
 }
 }
 
-function finalScreen(){
-  background(255);
-  textSize(25);
-  fill(0,200,0);
-  text('you lost!!', 225,400);
-}
-
 function loadHead(){ //loading head
-  head= new Snake(0,0,0,0,20,color(0, 0, 255));
+  head= new Snake(0,0,0,0,20,color(255, 0, 70));
 }
 
-function loadFood(){ //making food
-  food[0]= new Food(int(random(40)),int(random(40)),20,0);
+function runSnake(){
+  background(0);
+  head.run();
 }
 
 function runFood(){
   food[0].run();
 }
 
-function runSnake(){
-  background(200, 0, 255);
-  head.run();
+function loadFood(){ //making food
+  food[0]= new Food(int(random(40)),int(random(40)),20,0);
 }
