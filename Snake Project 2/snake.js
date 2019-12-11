@@ -26,6 +26,14 @@ class Snake{
     }
   }
 
+  tangled(){
+  for (var i=0; i<this.body.length; i++){
+    if (head.loc.x===this.body[i].x&&head.loc.y===this.body[i].y){
+      endGame='yes';
+    }
+  }
+  }
+
 checkEdges(){
   //if hits left side
   if(this.loc.x<0){
@@ -45,6 +53,15 @@ checkEdges(){
   }
 }
 
+hitFood(){
+    if(head.loc.x===food[0].loc.x&&
+        head.loc.y===food[0].loc.y){
+          food[0]= new Food(int(random(40)),int(random(40)),20,0);
+          this.body.push(createVector(head.loc.x,head.loc.y));
+          hitFood='yes';
+  }
+    }
+    
   update(){
     if(keyIsPressed&&
       keyCode===RIGHT_ARROW){
@@ -78,20 +95,4 @@ checkEdges(){
 
   }
 
-tangled(){
-for (var i=0; i<this.body.length; i++){
-  if (head.loc.x===this.body[i].x&&head.loc.y===this.body[i].y){
-    endGame='yes';
-  }
-}
-}
-
-hitFood(){
-    if(head.loc.x===food[0].loc.x&&
-        head.loc.y===food[0].loc.y){
-          food[0]= new Food(int(random(40)),int(random(40)),20,0);
-          this.body.push(createVector(head.loc.x,head.loc.y));
-          hitFood='yes';
-  }
-    }
 }//end of snake class

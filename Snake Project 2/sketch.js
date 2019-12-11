@@ -3,11 +3,12 @@
 //  This is a comment
 //  The setup function function is called once when your program begins
 
-segments=[];
+var btnPlay;
 numberFood=0;
+gameState=1;
+segments=[];
 food=[];
 score=0;
-gameState=1;
 function setup() {
   // put setup code here
   var cnv = createCanvas(800, 800);
